@@ -1,0 +1,43 @@
+.header{
+    background-color: rgba(0, 0, 0);
+    width: 100%;
+    height: 8vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.title{
+    font-family:  sans-serif;
+    font-size: 5vh;
+    color: rgb(255, 255, 255);
+}
+.container{
+    background-color: #777777;
+    height: 92vh;
+}
+.menu{
+    display:flex;
+    justify-content: space-evenly;
+    height: 8vh;
+    align-items: center;
+}
+.entrada{
+    height: 5vh;
+    border-radius: 50px;
+    border: none;
+    font-size: 3vh;
+    padding-left: 1%;
+}
+.entrada::selection{
+    background-color: blue;
+}
+.produtos{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    overflow: scroll;
+    height: 55vh;
+}
+.produtos::-webkit-scrollbar{
+    display: none;
+}
