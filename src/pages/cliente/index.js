@@ -3,6 +3,19 @@ import styles from './css.module.css'
 import { Produto } from '../../modules/produto'
 
 export function Cliente(){
+    const handleSubmit = event =>{
+        event.preventDefault()
+        if(event.target.id == 1){
+            console.log(document.getElementById('nome').value)
+            document.getElementById('nome').value = ''
+        }else if(event.target.id == 2){
+            console.log(document.getElementById('mesa').value)
+            document.getElementById('mesa').value = ''
+        }else{
+            console.log(document.getElementById('busca').value)
+            document.getElementById('busca').value = ''
+        }
+    }
     return(
         <div>
             <div className={styles.header}>
@@ -10,10 +23,28 @@ export function Cliente(){
             </div>
             <div className ={styles.container}>
                 <div className={styles.menu}>
-                    <input type='text' placeholder='Seu Nome' className={styles.nome,styles.entrada} />
-                    <input type='text' placeholder='nº' className={styles.mesa,styles.entrada} />
-                    <input type='text' placeholder='buscar por ...' className={styles.busca,styles.entrada} />
-                    <h3>id</h3>
+                    
+                    <input
+                        type='text' 
+                        id='nome'
+                        placeholder='Seu Nome' 
+                        className={styles.nome,styles.entrada1} 
+                    />
+                    <input 
+                        type='text' 
+                        id='mesa'
+                        placeholder='nº' 
+                        className={styles.mesa} 
+                    />
+                    <form className={styles.form} id={3} onSubmit={handleSubmit}>
+                        <input 
+                            type='text' 
+                            id='busca'
+                            placeholder='Buscar por ...' 
+                            className={styles.entrada} 
+                        />
+                        <h3 className={styles.filtro}>id</h3>
+                    </form>
                 </div>
                 <div className={styles.produtos}>
                     <Produto />
@@ -28,34 +59,40 @@ export function Cliente(){
                     <Produto />
                     <Produto />
                 </div>
-                <div>
-                    <div>
-                        <div>
+                <div className={styles.outMenu}>
+                    <div className={styles.resumo}>
+                        <div className={styles.resContent}>
                             <h3>
-                                resumo:
+                                RESUMO:
+                            </h3>
+                            <h3>
+                                item
+                            </h3>
+                            <h3>
+                                item - obs
                             </h3>
                         </div>
                     </div>
-                    <div>
+                    <div className={styles.conta}>
                         <h3>
-                            total: 
+                            TOTAL: 
                         </h3>
-                        <div>
+                        <div className={styles.troco}>
                             <h3>
-                                pago:
+                                PAGO:
                             </h3>
-                            <input type="text" />
+                            <input className={styles.trocoIn} placeholder='00,00' type="text" />
                         </div>
                         <h3>
-                            troco:
+                            TROCO:
                         </h3>
                     </div>
-                    <div>
+                    <div className={styles.botoes}>
                         <div className={styles.botao}>
-                            <h3>cancelar</h3>
+                            <h3>CANCELAR</h3>
                         </div>
                         <div className={styles.botao}>
-                            <h3>finalizar</h3>
+                            <h3>FINALIZAR</h3>
                         </div>
                     </div>
                 </div>

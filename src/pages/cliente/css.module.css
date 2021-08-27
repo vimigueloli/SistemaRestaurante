@@ -20,16 +20,56 @@
     justify-content: space-evenly;
     height: 8vh;
     align-items: center;
+    flex-wrap: wrap;
+}
+.entrada1{
+    height: 5vh;
+    border-radius: 50px;
+    border: none;
+    font-size: 3vh;
+    padding-left:1%;
+    box-sizing:border-box;
+    width: 30%;
+    outline: none;
 }
 .entrada{
     height: 5vh;
     border-radius: 50px;
     border: none;
     font-size: 3vh;
-    padding-left: 1%;
+    padding-left: 5%;
+    box-sizing:border-box;
+    width: 80%;
+    outline: none;
 }
-.entrada::selection{
-    background-color: blue;
+
+.entrada1:focus{
+    box-shadow: rgba(111, 226, 241, 0.548) 0px 0px 15px;
+}
+.entrada:focus{
+    box-shadow: rgba(111, 226, 241, 0.548) 0px 0px 15px;
+}
+.mesa:focus{
+    box-shadow: rgba(111, 226, 241, 0.548) 0px 0px 15px;
+}
+.mesa{
+    height: 5vh;
+    border-radius: 50px;
+    border: none;
+    font-size: 3vh;
+    padding-left:1%;
+    box-sizing:border-box;
+    width: 10%;
+    outline: none;
+}
+.form{
+    width: 33%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.filtro{
+    margin-left: 5%;
 }
 .produtos{
     display: flex;
@@ -40,4 +80,79 @@
 }
 .produtos::-webkit-scrollbar{
     display: none;
+}
+.outMenu{
+    display: flex;
+    justify-content: space-between; 
+    height: 29vh;
+    align-items: center;
+}
+.resumo{
+    display: flex;
+    justify-content: center;
+    width: 33%;
+    height: 29vh;
+    overflow: scroll;
+}
+.resumo::-webkit-scrollbar{
+    display: none;
+}
+.resContent{
+    margin-top: 3vh;
+    font-size: 3vh;
+    font-family: sans-serif;
+}
+
+.conta{
+    margin-top: 3vh;
+    width: 33%;
+    height: 25vh;
+    font-family: sans-serif;
+    font-size: 3vh;
+}
+.troco{
+    display: flex;
+    justify-content: flex-start;
+    width: 50%;
+}
+.trocoIn{
+    height: 3vh;
+    border-radius: 50px;
+    border: none;
+    font-size: 3vh;
+    padding-left: 5%;
+    margin-left: 5%;
+    box-sizing:border-box;
+    width: 30%;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.trocoIn:focus{
+    box-shadow: rgba(111, 226, 241, 0.548) 0px 0px 15px;
+}
+.botoes{
+    display: flex;
+    justify-content: flex-end;
+    width: 33%;
+    height: 28vh;
+    align-items: flex-end;
+    font-family: sans-serif;
+}
+.botao{
+    margin-bottom: 5vh;
+    margin-right: 5vh;
+    height: 5vh;
+    width: 30%;
+    border-radius: 50px;
+    font-size: 3vh;
+    text-align: center;
+    background-color: #aaaaaa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.botao:hover{
+    background-color: #5d5c5c;
 }
