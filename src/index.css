@@ -41,7 +41,7 @@ input[type=text]{
 }
 
 input:focus{
-    box-shadow: rgba(111, 226, 241, 0.548) 0px 0px 15px;
+    box-shadow: rgba(111, 200, 241, 0.548) 0px 0px 15px;
 }
 blockquote:before, blockquote:after,
 q:before, q:after {

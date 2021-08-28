@@ -1,5 +1,5 @@
 .container{
-    background-color: #cecece;
+    border: solid 1px #bad3e0;
     height: 350px;
     width: 350px;
     border-radius: 15px;
@@ -10,10 +10,15 @@
     margin-left: 1%;
     position: relative;
     margin-bottom: 3vh;
-    background: #777777;
-    box-shadow:  11px 11px 28px #4d4d4d,
-             -11px -11px 28px #a1a1a1;
+    transition: 0.4s;
     /* https://neumorphism.io/ conferir após seleção de cores */       
+}
+
+.container:hover{
+    background: linear-gradient(145deg, #c0d4e6, #e4fbff);
+    box-shadow:  9px 9px 18px #a4b5c4,
+             -9px -9px 18px #ffffff;
+    border: none
 }
 
 .container2{
@@ -28,10 +33,9 @@
     margin-left: 1%;
     position: relative;
     margin-bottom: 3vh;
-    background: #777777;
-    background: #90df90;
-    box-shadow:  11px 11px 28px #5e915e,
-             -11px -11px 28px #c2ffc2;;
+    background: linear-gradient(145deg, #c0d4e6, #e4fbff);
+    box-shadow:  9px 9px 18px #a4b5c4,
+             -9px -9px 18px #ffffff;
     /* https://neumorphism.io/ conferir após seleção de cores */       
 }
 
@@ -64,24 +68,24 @@
     font-size: 2.5vh;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
+.preco{
+    height: 3vh;
+}
+
 .add{
     width: 30%;
+    border: solid 1px #bad3e0;
     height: 5vh;
     border-radius: 50px;
-    background-color: rgb(220, 255, 252);
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: 0.3s;
 }
-.add2{
-    width: 30%;
-    height: 5vh;
-    border-radius: 50px;
-    background-color: rgb(255, 255, 255);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.add:hover{
+    background-color: #6aade948;
 }
 .id{
     position: absolute;

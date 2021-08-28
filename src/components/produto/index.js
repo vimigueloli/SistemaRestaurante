@@ -1,29 +1,53 @@
 import React, {useState, useEffect} from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import styles from './css.module.css'
 
 export function Produto(props){
-    const [selecionado,setSelecionado] = useState(false)
-    const [obs,setObs] = useState('')
-    const handleChange = event =>{
-        setObs(document.getElementById(props.numero).value)   
+    const dispatch = useDispatch()
+
+    const state = useSelector(state => state.cardapio[props.ordem].state)
+    const precoProduto = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL",minimumFractionDigits: 2 });
+    const valor = precoProduto.format(`${props.preco}`)
+
+    
+
+    /*function handleChange(){
+        let obs = (document.getElementById(props.numero).value)   
+        return{
+            type: 'OBS',
+            obs: obs,
+            numero: props.ordem
+        }
+    }*/
+
+    
+
+    function handleAlteracao(state) {
+        let obs = (document.getElementById(props.numero).value)
+        return{
+            type: 'ALTERAÇÃO',
+            state: state,
+            numero: props.ordem,
+            obs:obs
+        }
     }
+
     const handleSelection = () =>{
-        if(selecionado == false){
-            setSelecionado(true)
+        if(state == false){
+            dispatch(handleAlteracao(true))
         }else{
-            setSelecionado(false)
+            document.getElementById(props.numero).value = ''
+            dispatch(handleAlteracao(false))
         }   
     }
-    var precoProduto = new Intl.NumberFormat("pt-BR",
-                        { style: "currency", currency: "BRL",
-                          minimumFractionDigits: 2 });
-    const valor = precoProduto.format(`${props.preco}`)
+    
+    
     
     return(
             <>
         {
 
-            selecionado ?
+            state ?
             <div className={styles.container2} >
                 <div className={styles.content} >
                     <div className={styles.nome} >
@@ -34,18 +58,17 @@ export function Produto(props){
                     </div>
                     <input type='text' 
                         id ={props.numero}
-                        placeholder={'Alguma alteração?'}  
+                        placeholder={'Antes da seleção'}  
                         className={styles.obs}
-                        onChange={handleChange}
-                        onClick={event=> event.preventDefault()}
+                        disabled={true}
                     />
                     <div className={styles.valor}>
                         <div className={styles.add} onClick={handleSelection}>
                             Excluir
                         </div>
-                        <h1>
+                        <div className={styles.preco}>
                             {valor}
-                        </h1>
+                        </div>
                         
                     </div>
                     
@@ -66,15 +89,14 @@ export function Produto(props){
                         id ={props.numero}
                         placeholder={'Alguma alteração?'}  
                         className={styles.obs}
-                        onChange={handleChange}
                     />
                     <div className={styles.valor}>
-                        <div className={styles.add2} onClick={handleSelection}>
+                        <div className={styles.add} onClick={handleSelection}>
                             Add
                         </div>
-                        <h1>
+                        <div className={styles.preco}>
                             {valor}
-                        </h1>
+                        </div>
                         
                     </div>
                     
