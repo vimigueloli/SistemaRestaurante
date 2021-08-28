@@ -1,24 +1,52 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import styles from './css.module.css'
-import { Produto } from '../../modules/produto'
+import { Produto } from '../../components/produto'
+import { useQuery } from "graphql-hooks";
+import {connect, useSelector, useDispatch} from 'react-redux'
 
-export function Cliente(){
+
+const QUERY = `query MyQuery {
+    allProdutos {
+      id,
+      numero,
+      nome,
+      preco,
+      ingredientes
+    }
+}`
+
+
+
+const Cliente = () => {
+    
+
+
+
+    //const dispatch = useDispatch()
+    //const cardapio = useSelector(state => state.cardapio)
     const handleSubmit = event =>{
         event.preventDefault()
-        if(event.target.id == 1){
-            console.log(document.getElementById('nome').value)
-            document.getElementById('nome').value = ''
-        }else if(event.target.id == 2){
-            console.log(document.getElementById('mesa').value)
-            document.getElementById('mesa').value = ''
-        }else{
-            console.log(document.getElementById('busca').value)
-            document.getElementById('busca').value = ''
-        }
+        console.log(document.getElementById('busca').value)
+        document.getElementById('busca').value = ''
     }
+    
+    useEffect(()=>{
+        console.log('oi')
+    },[])
+
+    const { loading, error, data } = useQuery(QUERY, {
+        variables: {
+          limit: 10
+        }
+    });
+    if (loading) return "Loading...";
+    if (error) return "Something Bad Happened";
+    
+    var cardapio = data.allProdutos
+
     return(
         <div>
-            <div className={styles.header}>
+            <div onClick={()=> console.log(cardapio)} className={styles.header}>
                 <h1 className={styles.title}>Faça seu Pedido</h1>
             </div>
             <div className ={styles.container}>
@@ -47,17 +75,16 @@ export function Cliente(){
                     </form>
                 </div>
                 <div className={styles.produtos}>
-                    <Produto />
-                    <Produto />
-                    <Produto />
-                    <Produto />
-                    <Produto />
-                    <Produto />
-                    <Produto />
-                    <Produto />
-                    <Produto />
-                    <Produto />
-                    <Produto />
+
+                    {
+                        cardapio.map(response => <Produto key={response.id}
+                            nome={response.nome}
+                            id={response.id}
+                            ingredientes={response.ingredientes}
+                            numero={response.numero}
+                            preco={response.numero}
+                        />)
+                    }
                 </div>
                 <div className={styles.outMenu}>
                     <div className={styles.resumo}>
@@ -101,3 +128,6 @@ export function Cliente(){
         
     )
 }
+
+
+export default connect(state => ({state: state.cardapio}))(Cliente)

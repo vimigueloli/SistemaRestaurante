@@ -1,5 +1,13 @@
 # Getting Started with Create React App
 
+
+
+
+react redux react-redux axios
+
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
