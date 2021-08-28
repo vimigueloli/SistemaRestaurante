@@ -75,16 +75,17 @@ const Cliente = () => {
                     </form>
                 </div>
                 <div className={styles.produtos}>
-
+                    <div className={styles.space} />
                     {
                         cardapio.map(response => <Produto key={response.id}
                             nome={response.nome}
                             id={response.id}
                             ingredientes={response.ingredientes}
                             numero={response.numero}
-                            preco={response.numero}
+                            preco={response.preco}
                         />)
                     }
+                    <div className={styles.space} />
                 </div>
                 <div className={styles.outMenu}>
                     <div className={styles.resumo}>

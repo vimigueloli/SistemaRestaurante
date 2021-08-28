@@ -33,6 +33,16 @@ ol, ul {
 blockquote, q {
     quotes: none;
 }
+
+input[type=text]{
+    outline: none;
+    border-radius: 50px;
+    border: none;
+}
+
+input:focus{
+    box-shadow: rgba(111, 226, 241, 0.548) 0px 0px 15px;
+}
 blockquote:before, blockquote:after,
 q:before, q:after {
     content: '';

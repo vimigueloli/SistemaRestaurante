@@ -24,43 +24,26 @@
 }
 .entrada1{
     height: 5vh;
-    border-radius: 50px;
-    border: none;
     font-size: 3vh;
     padding-left:1%;
     box-sizing:border-box;
     width: 30%;
-    outline: none;
 }
 .entrada{
     height: 5vh;
-    border-radius: 50px;
-    border: none;
     font-size: 3vh;
     padding-left: 5%;
     box-sizing:border-box;
     width: 80%;
-    outline: none;
 }
 
-.entrada1:focus{
-    box-shadow: rgba(111, 226, 241, 0.548) 0px 0px 15px;
-}
-.entrada:focus{
-    box-shadow: rgba(111, 226, 241, 0.548) 0px 0px 15px;
-}
-.mesa:focus{
-    box-shadow: rgba(111, 226, 241, 0.548) 0px 0px 15px;
-}
+
 .mesa{
     height: 5vh;
-    border-radius: 50px;
-    border: none;
     font-size: 3vh;
     padding-left:1%;
     box-sizing:border-box;
     width: 10%;
-    outline: none;
 }
 .form{
     width: 33%;
@@ -80,6 +63,10 @@
 }
 .produtos::-webkit-scrollbar{
     display: none;
+}
+.space{
+    width: 100%;
+    height: 2vh;
 }
 .outMenu{
     display: flex;
