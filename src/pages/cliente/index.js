@@ -19,28 +19,20 @@ const QUERY = `query MyQuery {
 
 const Cliente = (state) => {
     const dispatch = useDispatch()
-    const lista = state.lista//useSelector(state => state.cardapio)
+    const lista = state.lista
     const [searchOn,setSearchOn] = useState(false)
-    
-    /*function search(filter){
-        content.map(response => {
-            let text = response.nome
-            console.log(text)
-            if(text.toUpperCase().indexOf(filter.toUpperCase())>-1) {
-                
-                content.splice(i, 1);
-            }else{
-               
-            }
-            i++
-        })
-        return content
-    }  usar somente a condição*/
+    const [filtro,setFilfro] = useState('NOME')
 
-    function busca(filter){
+//---------motor de busca---------
+    function busca(filter,type){
         for(let i =0;i < lista.length; i++){
             console.log(lista[i])
-            let text = lista[i].nome
+            let text
+            if(type == 'NOME'){
+                text = lista[i].nome
+            }else{
+                text = `${lista[i].id}`
+            }
             if(text.toUpperCase().indexOf(filter.toUpperCase())>-1) {
                 document.getElementById(lista[i].id).style.display = "";
             }else{
@@ -49,12 +41,16 @@ const Cliente = (state) => {
         }
     }
 
-    function volta(){
-        setSearchOn(false)
-        let buscar = document.getElementById('busca').value
-        busca(buscar)
+//----------muda o tipo de busca que vai ser feita----------
+    function handleFiltro(){
+        if(filtro == 'NOME'){
+            setFilfro('Nº')
+        }else{
+            setFilfro('NOME')
+        }
     }
-    
+
+//-----------ativa a busca por produtos------------- 
     const handleSubmit = event =>{
         event.preventDefault()
         
@@ -67,9 +63,16 @@ const Cliente = (state) => {
         document.getElementById('busca').value = ''
     }
 
-    
-    
-// função que habilita os estados dos produtos
+//-----------tira os produtos do estado de busca-------------
+    function volta(){
+        setSearchOn(false)
+        let buscar = document.getElementById('busca').value
+        busca(buscar,filtro)
+    }
+
+/* -----------------------------------------
+        Implementação com o Dato CMS
+/* função que habilita os estados dos produtos
     const handleCardapio = (item) => {
         let i = 0
         item.map(response => {
@@ -85,7 +88,7 @@ const Cliente = (state) => {
         }
     }
 
-//requisição do conteudo do datocms
+/*requisição do conteudo do datocms
     const { loading, error, data } = useQuery(QUERY, {
         variables: {
           limit: 10
@@ -96,7 +99,7 @@ const Cliente = (state) => {
 //enviando isso para a store
     var cardapio = data.allProdutos
     dispatch(handleCardapio(cardapio))
-
+*/
     return(
         <div>
             <div onClick={()=> console.log(state)} className={styles.header}>
@@ -118,7 +121,7 @@ const Cliente = (state) => {
                         placeholder='nº' 
                         className={styles.mesa} 
                     />
-                    <form className={styles.form} id={3} onSubmit={handleSubmit}>
+                    <form className={styles.form} id={'form'} onSubmit={handleSubmit}>
 
                             {
                                 searchOn ?
@@ -145,7 +148,13 @@ const Cliente = (state) => {
                                             console.log("input")
                                         }}
                                     /> 
-                                    <h3 className={styles.filtro}>nome</h3>
+                                    <div 
+                                        className={styles.filtro}
+                                        onClick={handleFiltro}
+                                    >
+                                       <a> {filtro} </a>
+                                    </div>
+                                    
                                 </>
                             }
                             
@@ -156,11 +165,11 @@ const Cliente = (state) => {
                     <div className={styles.space} />
                     {
                         
-                        lista.map(response => <Produto key={response.numero}
+                        lista.map(response => <Produto key={response.id}
                             nome={response.nome}
                             id={response.id}
                             ingredientes={response.ingredientes}
-                            numero={response.numero}
+                            numero={response.id}
                             preco={response.preco}
                             ordem={response.ordem}
                         />)

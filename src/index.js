@@ -5,23 +5,24 @@ import { Provider } from 'react-redux';
 import store from './components/store'
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import { GraphQLClient, ClientContext } from 'graphql-hooks'
+//import { GraphQLClient, ClientContext } from 'graphql-hooks'
 
-const client = new GraphQLClient({
+/*const client = new GraphQLClient({
   url: "https://graphql.datocms.com/",
   headers: {
     "Authorization": `Bearer ${process.env.REACT_APP_CARDAPIO}`,
   }
 });
 
+<ClientContext.Provider value={client}>
+*/
+
 
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ClientContext.Provider value={client}>
-        <Cliente />
-      </ClientContext.Provider>
+      <Cliente />
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

@@ -9,15 +9,7 @@ export function Produto(props){
     const precoProduto = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL",minimumFractionDigits: 2 });
     const valor = precoProduto.format(`${props.preco}`)
 
-    /*function handleChange(){
-        let obs = (document.getElementById(props.numero).value)   
-        return{
-            type: 'OBS',
-            obs: obs,
-            numero: props.ordem
-        }
-        id
-    }*/
+    
 
     
 
