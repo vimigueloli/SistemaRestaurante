@@ -17,59 +17,59 @@ const QUERY = `query MyQuery {
 
 
 
-const Cliente = () => {
-    
+const Cliente = (state) => {
     const dispatch = useDispatch()
-    const lista = useSelector(state => state.cardapio)
-    //const backup = useSelector(state => state.backup)
-    const busca = (item) => {
-        return{
-        type: 'BUSCA',
-        cardapio: item
-    }}
-
-    function search(filter){
-        let content = lista
-        //console.log(output)
-        let i = 0
-        let objs = []
+    const lista = state.lista//useSelector(state => state.cardapio)
+    const [searchOn,setSearchOn] = useState(false)
+    
+    /*function search(filter){
         content.map(response => {
             let text = response.nome
-            
-            if(text.toUpperCase().indexOf(filter.toUpperCase()) > -1) {
-            }else{
-                objs = [...objs,response]
+            console.log(text)
+            if(text.toUpperCase().indexOf(filter.toUpperCase())>-1) {
+                
                 content.splice(i, 1);
+            }else{
+               
             }
             i++
         })
+        return content
+    }  usar somente a condição*/
 
-        var output =[]
-        content.map(response =>{
-            output = [...output,response]
-        })
-        objs.map(response =>{
-            output = [...output,response]
-        })
-        console.log(output)
-        return output
-        
+    function busca(filter){
+        for(let i =0;i < lista.length; i++){
+            console.log(lista[i])
+            let text = lista[i].nome
+            if(text.toUpperCase().indexOf(filter.toUpperCase())>-1) {
+                document.getElementById(lista[i].id).style.display = "";
+            }else{
+                document.getElementById(lista[i].id).style.display = "none";
+            }
+        }
     }
 
+    function volta(){
+        setSearchOn(false)
+        let buscar = document.getElementById('busca').value
+        busca(buscar)
+    }
+    
     const handleSubmit = event =>{
         event.preventDefault()
-        //console.log(document.getElementById('busca').value)
+        
         if(document.getElementById('busca').value == ''){
         }else{
-            let texto = search(document.getElementById('busca').value)
-            dispatch(busca(texto))
+            setSearchOn(true)
+            let buscar = document.getElementById('busca').value
+            busca(buscar)
         }
         document.getElementById('busca').value = ''
     }
 
     
     
-
+// função que habilita os estados dos produtos
     const handleCardapio = (item) => {
         let i = 0
         item.map(response => {
@@ -80,10 +80,12 @@ const Cliente = () => {
         })
         return{
             type: 'INIT',
-            cardapio: item
+            cardapio: item,
+            back: item
         }
     }
 
+//requisição do conteudo do datocms
     const { loading, error, data } = useQuery(QUERY, {
         variables: {
           limit: 10
@@ -91,14 +93,13 @@ const Cliente = () => {
     });
     if (loading) return "Loading...";
     if (error) return "Something Bad Happened";
-    
+//enviando isso para a store
     var cardapio = data.allProdutos
-    var backup = data.allProdutos
     dispatch(handleCardapio(cardapio))
 
     return(
         <div>
-            <div onClick={()=> console.log(lista)} className={styles.header}>
+            <div onClick={()=> console.log(state)} className={styles.header}>
                 <h1 className={styles.title}>FAÇA SEU PEDIDO</h1>
                 <div className={styles.divisor}/>
             </div>
@@ -118,19 +119,44 @@ const Cliente = () => {
                         className={styles.mesa} 
                     />
                     <form className={styles.form} id={3} onSubmit={handleSubmit}>
-                        <input 
-                            type='text' 
-                            id='busca'
-                            placeholder='Buscar por ...' 
-                            className={styles.entrada} 
-                        />
-                        <h3 className={styles.filtro}>id</h3>
+
+                            {
+                                searchOn ?
+                                <>
+                                    <input 
+                                        type='text' 
+                                        id='busca'
+                                        placeholder='Buscar por ...' 
+                                        className={styles.entrada} 
+                                        disabled={true}
+                                    /> 
+                                    <div className={styles.botao} 
+                                    onClick={() => volta()}>
+                                        x
+                                    </div>
+                                </> :
+                                <>
+                                    <input 
+                                        type='text' 
+                                        id='busca'
+                                        placeholder='Buscar por ...' 
+                                        className={styles.entrada} 
+                                        onClick={() =>{
+                                            console.log("input")
+                                        }}
+                                    /> 
+                                    <h3 className={styles.filtro}>nome</h3>
+                                </>
+                            }
+                            
+                        
                     </form>
                 </div>
                 <div className={styles.produtos}>
                     <div className={styles.space} />
                     {
-                        lista.map(response => <Produto key={response.id}
+                        
+                        lista.map(response => <Produto key={response.numero}
                             nome={response.nome}
                             id={response.id}
                             ingredientes={response.ingredientes}
@@ -185,4 +211,4 @@ const Cliente = () => {
 }
 
 
-export default connect(state => ({state: state.cardapio}))(Cliente)
+export default connect(state => ({lista: state.cardapio}))(Cliente)

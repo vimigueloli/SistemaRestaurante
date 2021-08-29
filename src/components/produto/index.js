@@ -4,12 +4,10 @@ import styles from './css.module.css'
 
 export function Produto(props){
     const dispatch = useDispatch()
-
+    const lista = useSelector(state => state.cardapio)
     const state = useSelector(state => state.cardapio[props.ordem].state)
     const precoProduto = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL",minimumFractionDigits: 2 });
     const valor = precoProduto.format(`${props.preco}`)
-
-    
 
     /*function handleChange(){
         let obs = (document.getElementById(props.numero).value)   
@@ -18,6 +16,7 @@ export function Produto(props){
             obs: obs,
             numero: props.ordem
         }
+        id
     }*/
 
     
@@ -48,7 +47,7 @@ export function Produto(props){
         {
 
             state ?
-            <div className={styles.container2} >
+            <div className={styles.container2} id={props.id}>
                 <div className={styles.content} >
                     <div className={styles.nome} >
                         <h1>{props.nome}</h1>
@@ -57,7 +56,7 @@ export function Produto(props){
                         <h1>{props.ingredientes}</h1>
                     </div>
                     <input type='text' 
-                        id ={props.numero}
+                        id ={props.ordem}
                         placeholder={'Antes da seleção'}  
                         className={styles.obs}
                         disabled={true}
@@ -77,7 +76,7 @@ export function Produto(props){
                     {props.numero}
             </h1>
             </div> :
-            <div className={styles.container}  >
+            <div className={styles.container}  id={props.id}>
                 <div className={styles.content}>
                     <div className={styles.nome}>
                         <h1>{props.nome}</h1>

@@ -20,7 +20,7 @@ function reducer(state = initial_state,action){
         return{
             ...state,
             cardapio: content,
-            backup: content
+            backup: action.back
             
         }
     }
