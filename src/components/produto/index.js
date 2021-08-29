@@ -1,28 +1,25 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styles from './css.module.css'
 
 export function Produto(props){
     const dispatch = useDispatch()
-    const lista = useSelector(state => state.cardapio)
     const state = useSelector(state => state.cardapio[props.ordem].state)
     const precoProduto = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL",minimumFractionDigits: 2 });
     const valor = precoProduto.format(`${props.preco}`)
 
-    
-
-    
-
+//-----------muda o estado do produto na store-----------
     function handleAlteracao(state) {
-        let obs = (document.getElementById(props.numero).value)
+        let obs = (document.getElementById(`0${props.ordem}`).value)
         return{
             type: 'ALTERAÇÃO',
             state: state,
             numero: props.ordem,
-            obs:obs
+            obs: obs
         }
     }
 
+//----------verifica o estado atual do produto----------
     const handleSelection = () =>{
         if(state == false){
             dispatch(handleAlteracao(true))
@@ -32,8 +29,7 @@ export function Produto(props){
         }   
     }
     
-    
-    
+/*---------------------------------html--------------------------------------*/
     return(
             <>
         {
@@ -48,7 +44,7 @@ export function Produto(props){
                         <h1>{props.ingredientes}</h1>
                     </div>
                     <input type='text' 
-                        id ={props.ordem}
+                        id ={`0${props.ordem}`}
                         placeholder={'Antes da seleção'}  
                         className={styles.obs}
                         disabled={true}
@@ -77,7 +73,7 @@ export function Produto(props){
                         <h1>{props.ingredientes}</h1>
                     </div>
                     <input type='text' 
-                        id ={props.numero}
+                        id ={`0${props.ordem}`}
                         placeholder={'Alguma alteração?'}  
                         className={styles.obs}
                     />

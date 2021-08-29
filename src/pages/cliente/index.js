@@ -1,19 +1,7 @@
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import styles from './css.module.css'
 import { Produto } from '../../components/produto'
-import { useQuery } from "graphql-hooks";
-import {connect, useSelector, useDispatch} from 'react-redux'
-
-
-/*const QUERY = `query MyQuery {
-    allProdutos {
-      id,
-      numero,
-      nome,
-      preco,
-      ingredientes
-    }
-}`*/
+import {connect, useDispatch} from 'react-redux'
 
 
 
@@ -23,9 +11,11 @@ const Cliente = (state) => {
     const pedidos = state.state.pedido
     const precoTotal = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL",minimumFractionDigits: 2 });
     const total = precoTotal.format(calcTotal())
+    var resumo = geraResumo();
+    const [troco,setTroco] = useState(precoTotal.format(0.0))
     const [searchOn,setSearchOn] = useState(false)
     const [filtro,setFilfro] = useState({type:'NOME', state: true})
-
+    
 //-------regista o nome da pessoa e da mesa---------
     function handleNome(){
         var nome = document.getElementById('nome').value
@@ -90,49 +80,66 @@ const Cliente = (state) => {
         }
     }
 
-
 //------------calcula o total-------------
-function calcTotal(){
-    var total = 0
-    pedidos.map(response=>{
-        total = total + response.preco
-    })
-    return total
-}
-
-/* -----------------------------------------
-        Implementação com o Dato CMS
-/* função que habilita os estados dos produtos
-    const handleCardapio = (item) => {
-        let i = 0
-        item.map(response => {
-            response.state.state = false 
-            response.obs = ''
-            response.ordem = i
-            i++
+    function calcTotal(){
+        var total = 0
+        pedidos.map(response=>{
+            total = total + response.preco
         })
-        return{
-            type: 'INIT',
-            cardapio: item,
-            back: item
-        }
+        return total
     }
 
-/*requisição do conteudo do datocms
-    const { loading, error, data } = useQuery(QUERY, {
-        variables: {
-          limit: 10
+//------------calcula o total-------------
+    function geraResumo(){
+        var output =[]
+        pedidos.map(response=>{
+            if(response.obs ==''){
+                output = [...output, {desc: `${response.prato} -${precoTotal.format(response.preco)}`}]
+            }else{
+                output = [...output, {desc: `${response.prato} (${response.obs}) -${precoTotal.format(response.preco)}`}]
+            }
+            
+        })
+        return output
+    }
+
+//------------calcula o troco-------------
+    function handleTroco(){
+        var output = []
+        var input =  document.getElementById('pago').value
+        input = input.replace(",",".")
+        input = parseFloat(input)
+        var subtotal = total.replace('R$',' ')
+        subtotal = subtotal.replace(',','.')
+        console.log(subtotal)
+        subtotal = parseFloat(subtotal)
+        input = input - subtotal
+        var compare = `- ${input}` 
+        if(compare == '- NaN'){
+            console.log('oi')
+            window.alert("por favor insira somente numeros separados por (,) ou (.) no campo")
+            document.getElementById('pago').value = ''
+            output = precoTotal.format(0)
+        }else{
+            if(input < 0){
+                input = input * -1
+                output = `faltam ${precoTotal.format(input)}`
+            }else{
+                output = precoTotal.format(input)
+            }
         }
-    });
-    if (loading) return "Loading...";
-    if (error) return "Something Bad Happened";
-//enviando isso para a store
-    var cardapio = data.allProdutos
-    dispatch(handleCardapio(cardapio))
-*/
+        return output
+    }
+
+//------------reseta a compra-------------
+    function reset(){
+       document.location.reload()
+    }
+
+/*-----------------------------------------html-----------------------------------------*/
     return(
         <div>
-            <div onClick={()=> console.log(state.state.pedido)} className={styles.header}>
+            <div onClick={()=> console.log(pedidos)} className={styles.header}>
                 <h1 className={styles.title}>FAÇA SEU PEDIDO</h1>
                 <div className={styles.divisor}/>
             </div>
@@ -149,7 +156,7 @@ function calcTotal(){
                     <input 
                         type={'text'} 
                         id={'mesa'}
-                        placeholder={'nº'} 
+                        placeholder={'nº da mesa'} 
                         className={styles.mesa} 
                         onChange={()=>handleNome()}
                     />
@@ -165,7 +172,7 @@ function calcTotal(){
                                         className={styles.entrada} 
                                         disabled={true}
                                     /> 
-                                    <div className={styles.botao} 
+                                    <div className={styles.filtro} 
                                     onClick={() => volta()}>
                                         x
                                     </div>
@@ -214,30 +221,39 @@ function calcTotal(){
                             <h3>
                                 RESUMO:
                             </h3>
-                            <h3>
-                                item
-                            </h3>
-                            <h3>
-                                item - obs
-                            </h3>
+                            {
+                                resumo.map(response => <h3 key={response.desc}>
+                                        {response.desc}
+                                    </h3>
+                                )
+                                
+                            }
                         </div>
                     </div>
                     <div className={styles.conta}>
-                        <h3>
+                        <h3 onChange={()=> handleTroco()}>
                             TOTAL: {total}
                         </h3>
                         <div className={styles.troco}>
                             <h3>
-                                PAGO:
+                                PAGO: R$
                             </h3>
-                            <input className={styles.trocoIn} placeholder='00,00' type="text" />
+                            <input 
+                                className={styles.trocoIn} 
+                                id={'pago'} 
+                                placeholder='00,00' 
+                                type="text" 
+                                onChange={()=>{
+                                    setTroco(handleTroco())
+                                }}
+                            />
                         </div>
-                        <h3>
-                            TROCO:
+                        <h3 className={styles.troco}>
+                            TROCO: {troco}
                         </h3>
                     </div>
                     <div className={styles.botoes}>
-                        <div className={styles.botao}>
+                        <div className={styles.botao} onClick={()=>{reset()}}>
                             <h3>CANCELAR</h3>
                         </div>
                         <div className={styles.botao}>

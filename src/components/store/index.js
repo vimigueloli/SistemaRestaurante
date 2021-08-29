@@ -1,10 +1,7 @@
 import {createStore} from 'redux'
 
 
-
-var initial_state = []
-  
-
+/*-----------------------------------cardapio--------------------------------------*/
 const cardapio = [
     {
         id: 1,
@@ -13,7 +10,7 @@ const cardapio = [
         ingredientes: "pão, carne, queijo, alface e tomate",
         state: false,
         url: '../../assets/hamburguer.png',
-        obs: "",
+        obs: " ",
         ordem: 0
     },
     {
@@ -22,7 +19,7 @@ const cardapio = [
         preco: 10.5,
         ingredientes: "Copo de refrigerante de 500 ml com sabor a escolha",
         state: false,
-        obs: "",
+        obs: " ",
         ordem: 1
     },
     {
@@ -31,7 +28,7 @@ const cardapio = [
         preco: 8.5,
         ingredientes: "350g de batata frita",
         state: false,
-        obs: "",
+        obs: " ",
         ordem: 2
     },
 
@@ -41,7 +38,7 @@ const cardapio = [
         preco: 16.5,
         ingredientes: "Sanduiche de pão,carne,bacon,queijo,salada e tomate",
         state: false,
-        obs: "",
+        obs: " ",
         ordem: 3
     },
     {
@@ -50,23 +47,23 @@ const cardapio = [
         preco: 22.5,
         ingredientes: "Hamburguer, batata frita grande e refrigerante de 500ml com sabor a escolha",
         state: false,
-        obs: "",
+        obs: " ",
         ordem: 4
     }
 ]
 
-
-
-initial_state = {
+/*-----------estado inicial da store------------*/
+var initial_state = {
     console: 'oi',
     cardapio: cardapio,
     cliente: [],
     pedido: []
 }
 
+
+/*-------------------------função que altera os dados da store de acordo com ações disparadas---------------------------*/
 function reducer(state = initial_state,action){
-    
-    
+
 //---------coloca um pedido "no carrinho"----------
     if(action.type == "ALTERAÇÃO"){
         var content = state.cardapio
@@ -126,23 +123,10 @@ function reducer(state = initial_state,action){
         }
     }
 
-
-//implementação com Dato CMS retirada
-    /*if(action.type == "INIT"){
-        var content = action.cardapio
-        //console.log(content)
-        return{
-            ...state,
-            cardapio: content,
-            backup: action.back
-            
-        }
-    }*/
-
-
+/*----------retorno do estado a cada ciclo----------*/
     return state
 }
 
+/*------------------------export da store-------------------------*/
 const store = createStore(reducer)
-
 export default store

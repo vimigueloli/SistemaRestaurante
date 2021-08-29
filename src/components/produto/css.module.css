@@ -1,3 +1,6 @@
+/* https://neumorphism.io/ para ajudar a alterar o tema de cores */ 
+
+/*--------bloco em estado inicial---------*/
 .container{
     border: solid 1px #bad3e0;
     height: 350px;
@@ -10,10 +13,8 @@
     margin-left: 1%;
     position: relative;
     margin-bottom: 3vh;
-    transition: 0.4s;
-    /* https://neumorphism.io/ conferir após seleção de cores */       
+    transition: 0.4s;      
 }
-
 .container:hover{
     background: linear-gradient(145deg, #c0d4e6, #e4fbff);
     box-shadow:  9px 9px 18px #a4b5c4,
@@ -21,6 +22,7 @@
     border: none
 }
 
+/*--------bloco em estado selecionado---------*/
 .container2{
     background-color: #90df90;
     height: 350px;
@@ -35,12 +37,11 @@
     margin-bottom: 3vh;
     background: linear-gradient(145deg, #c0d4e6, #e4fbff);
     box-shadow:  9px 9px 18px #a4b5c4,
-             -9px -9px 18px #ffffff;
-    /* https://neumorphism.io/ conferir após seleção de cores */       
+             -9px -9px 18px #ffffff;      
 }
 
 
-
+/*--------bloco de conteudo interno---------*/
 .content{
     width: 75%;
     display: flex;
@@ -73,7 +74,7 @@
 .preco{
     height: 3vh;
 }
-
+/*--------botão para adicionar produto---------*/
 .add{
     width: 30%;
     border: solid 1px #bad3e0;
@@ -87,6 +88,8 @@
 .add:hover{
     background-color: #6aade948;
 }
+
+/*--------numero do prato--------*/
 .id{
     position: absolute;
     margin-top: 1.5vh;
