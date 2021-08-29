@@ -5,7 +5,7 @@ import { useQuery } from "graphql-hooks";
 import {connect, useSelector, useDispatch} from 'react-redux'
 
 
-const QUERY = `query MyQuery {
+/*const QUERY = `query MyQuery {
     allProdutos {
       id,
       numero,
@@ -13,40 +13,42 @@ const QUERY = `query MyQuery {
       preco,
       ingredientes
     }
-}`
+}`*/
 
 
 
 const Cliente = (state) => {
     const dispatch = useDispatch()
-    const lista = state.lista
+    const lista = state.state.cardapio
+    const pedidos = state.state.pedido
+    const precoTotal = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL",minimumFractionDigits: 2 });
+    const total = precoTotal.format(calcTotal())
     const [searchOn,setSearchOn] = useState(false)
-    const [filtro,setFilfro] = useState('NOME')
+    const [filtro,setFilfro] = useState({type:'NOME', state: true})
 
-//---------motor de busca---------
-    function busca(filter,type){
-        for(let i =0;i < lista.length; i++){
-            console.log(lista[i])
-            let text
-            if(type == 'NOME'){
-                text = lista[i].nome
-            }else{
-                text = `${lista[i].id}`
-            }
-            if(text.toUpperCase().indexOf(filter.toUpperCase())>-1) {
-                document.getElementById(lista[i].id).style.display = "";
-            }else{
-                document.getElementById(lista[i].id).style.display = "none";
-            }
+//-------regista o nome da pessoa e da mesa---------
+    function handleNome(){
+        var nome = document.getElementById('nome').value
+        var mesa = document.getElementById('mesa').value
+
+        dispatch(regCliente(nome,mesa))
+    }
+
+//-------envia o nome da pessoa e da mesa para store---------
+    function regCliente(nome,mesa){
+        return{
+            type: "CLIENTE",
+            nome: nome,
+            mesa: mesa
         }
     }
 
 //----------muda o tipo de busca que vai ser feita----------
     function handleFiltro(){
-        if(filtro == 'NOME'){
-            setFilfro('Nº')
+        if(filtro.state == true){
+            setFilfro({type:'Nº', state: false})
         }else{
-            setFilfro('NOME')
+            setFilfro({type:'NOME', state: true})
         }
     }
 
@@ -67,8 +69,36 @@ const Cliente = (state) => {
     function volta(){
         setSearchOn(false)
         let buscar = document.getElementById('busca').value
-        busca(buscar,filtro)
+        busca(buscar)
     }
+
+//---------motor de busca---------
+    function busca(filter){
+        for(let i =0;i < lista.length; i++){
+            console.log(lista[i])
+            let text
+            if(filtro.state == true){
+                text = lista[i].nome
+            }else{
+                text = `${lista[i].id}`
+            }
+            if(text.toUpperCase().indexOf(filter.toUpperCase())>-1) {
+                document.getElementById(lista[i].id).style.display = "";
+            }else{
+                document.getElementById(lista[i].id).style.display = "none";
+            }
+        }
+    }
+
+
+//------------calcula o total-------------
+function calcTotal(){
+    var total = 0
+    pedidos.map(response=>{
+        total = total + response.preco
+    })
+    return total
+}
 
 /* -----------------------------------------
         Implementação com o Dato CMS
@@ -76,7 +106,7 @@ const Cliente = (state) => {
     const handleCardapio = (item) => {
         let i = 0
         item.map(response => {
-            response.state = false 
+            response.state.state = false 
             response.obs = ''
             response.ordem = i
             i++
@@ -102,7 +132,7 @@ const Cliente = (state) => {
 */
     return(
         <div>
-            <div onClick={()=> console.log(state)} className={styles.header}>
+            <div onClick={()=> console.log(state.state.pedido)} className={styles.header}>
                 <h1 className={styles.title}>FAÇA SEU PEDIDO</h1>
                 <div className={styles.divisor}/>
             </div>
@@ -110,16 +140,18 @@ const Cliente = (state) => {
                 <div className={styles.menu}>
                     
                     <input
-                        type='text' 
-                        id='nome'
+                        type={'text'} 
+                        id={'nome'}
                         placeholder='Seu Nome' 
                         className={styles.nome,styles.entrada1} 
+                        onChange={()=>handleNome()}
                     />
                     <input 
-                        type='text' 
-                        id='mesa'
-                        placeholder='nº' 
+                        type={'text'} 
+                        id={'mesa'}
+                        placeholder={'nº'} 
                         className={styles.mesa} 
+                        onChange={()=>handleNome()}
                     />
                     <form className={styles.form} id={'form'} onSubmit={handleSubmit}>
 
@@ -152,7 +184,7 @@ const Cliente = (state) => {
                                         className={styles.filtro}
                                         onClick={handleFiltro}
                                     >
-                                       <a> {filtro} </a>
+                                       <a> {filtro.type} </a>
                                     </div>
                                     
                                 </>
@@ -192,7 +224,7 @@ const Cliente = (state) => {
                     </div>
                     <div className={styles.conta}>
                         <h3>
-                            TOTAL: 
+                            TOTAL: {total}
                         </h3>
                         <div className={styles.troco}>
                             <h3>
@@ -220,4 +252,4 @@ const Cliente = (state) => {
 }
 
 
-export default connect(state => ({lista: state.cardapio}))(Cliente)
+export default connect(state => ({state: state}))(Cliente)

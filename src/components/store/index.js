@@ -60,10 +60,74 @@ const cardapio = [
 initial_state = {
     console: 'oi',
     cardapio: cardapio,
-    backup: []
+    cliente: [],
+    pedido: []
 }
 
 function reducer(state = initial_state,action){
+    
+    
+//---------coloca um pedido "no carrinho"----------
+    if(action.type == "ALTERAÇÃO"){
+        var content = state.cardapio
+        var lista = state.pedido
+        var novo
+        var tirou = false
+        var preco 
+        var cont = lista.length
+        console.log(action.obs)
+        for(let i=0;i < content.length ; i++){
+            if(action.numero == content[i].ordem){
+                content[i].state = action.state
+                novo = content[i].nome
+                preco = content[i].preco
+                content[i].obs = action.obs
+            }
+        }
+        if(action.state == true){
+            return{
+                ...state,
+                cardapio: content,
+                pedido: [...lista,{prato: novo, obs: action.obs,preco: preco, id: cont}]
+            }
+        }else{
+            for(let i=0;i < state.pedido.length;i++){
+                if(tirou == false){
+                    if(lista[i].prato == novo ){
+                        lista.splice(i,1)
+                        tirou = true
+                        i--
+                    }
+                }else{
+                    console.log('oi')
+                    lista[i].id = i
+                }
+            }
+
+            return{
+                ...state,
+                cardapio: content,
+                pedido: lista
+            }
+        }
+        
+    }
+    
+//---------coloca um pedido "no carrinho"----------
+    if(action.type == "CLIENTE"){
+        var nome = action.nome
+        var mesa = action.mesa
+        return{
+            ...state,
+            cliente:{
+                nome:nome,
+                mesa: mesa,
+            } 
+        }
+    }
+
+
+//implementação com Dato CMS retirada
     /*if(action.type == "INIT"){
         var content = action.cardapio
         //console.log(content)
@@ -74,30 +138,8 @@ function reducer(state = initial_state,action){
             
         }
     }*/
-    if(action.type == "BUSCA"){
-        var content = action.cardapio
-        console.log(content)
-        return{
-            ...state,
-            cardapio: content,
-        }
-    }
-    
-    if(action.type == "ALTERAÇÃO"){
-        var content = state.cardapio
-        console.log(action.obs)
-        for(let i=0;i < content.length ; i++){
-            if(action.numero == content[i].ordem){
-                content[i].state = action.state
-                content[i].obs = action.obs
-            }
-        }
-        return{
-            ...state,
-            cardapio: content
-        }
-    }
-    
+
+
     return state
 }
 
