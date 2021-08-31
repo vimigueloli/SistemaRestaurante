@@ -50,9 +50,9 @@ export function Produto(props){
                         disabled={true}
                     />
                     <div className={styles.valor}>
-                        <div className={styles.add} onClick={handleSelection}>
+                        <button className={styles.add} onClick={handleSelection}>
                             Excluir
-                        </div>
+                        </button>
                         <div className={styles.preco}>
                             {valor}
                         </div>
@@ -78,9 +78,9 @@ export function Produto(props){
                         className={styles.obs}
                     />
                     <div className={styles.valor}>
-                        <div className={styles.add} onClick={handleSelection}>
+                        <button className={styles.add} onClick={handleSelection}>
                             Add
-                        </div>
+                        </button>
                         <div className={styles.preco}>
                             {valor}
                         </div>

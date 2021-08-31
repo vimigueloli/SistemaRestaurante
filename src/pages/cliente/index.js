@@ -1,7 +1,8 @@
-import React, {useState} from 'react'
+import React, {useState, useCallback, useEffect} from 'react'
 import styles from './css.module.css'
 import { Produto } from '../../components/produto'
 import {connect, useDispatch} from 'react-redux'
+import useWebSocket, { ReadyState } from 'react-use-websocket';
 
 
 
@@ -9,27 +10,49 @@ const Cliente = (state) => {
     const dispatch = useDispatch()
     const lista = state.state.cardapio
     const pedidos = state.state.pedido
+    const cliente = state.state.cliente
     const precoTotal = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL",minimumFractionDigits: 2 });
     const total = precoTotal.format(calcTotal())
-    var resumo = geraResumo();
+    var resumo = geraResumo(0)
+    var output = geraResumo(1)
     const [troco,setTroco] = useState(precoTotal.format(0.0))
     const [searchOn,setSearchOn] = useState(false)
     const [filtro,setFilfro] = useState({type:'NOME', state: true})
     
+    
+
+
+//----------------estabelecedo uma conexão com o web socket----------------
+    var ws = new WebSocket('ws://localhost:3001')
+
+//-------------------------envia para o ws----------------------------
+    const handleClickSendMessage = useCallback(() => {
+        if(cliente.nome !== undefined){
+            if(cliente.nome !== ''){
+                output = geraResumo(1)
+                ws.send(output)
+                window.alert('Pedido realizado com sucesso')
+                reset()
+            }else{
+                window.alert("por favor insira o seu nome")
+            }
+        }else{
+            window.alert("por favor insira o seu nome")
+        }
+        
+    }, [output,]);
+    
 //-------regista o nome da pessoa e da mesa---------
     function handleNome(){
         var nome = document.getElementById('nome').value
-        var mesa = document.getElementById('mesa').value
-
-        dispatch(regCliente(nome,mesa))
+        dispatch(regCliente(nome))
     }
 
 //-------envia o nome da pessoa e da mesa para store---------
-    function regCliente(nome,mesa){
+    function regCliente(nome){
         return{
             type: "CLIENTE",
-            nome: nome,
-            mesa: mesa
+            nome: nome
         }
     }
 
@@ -90,17 +113,27 @@ const Cliente = (state) => {
     }
 
 //------------calcula o total-------------
-    function geraResumo(){
-        var output =[]
+    function geraResumo(config){
+        var saida =[]
+        var controle = `${cliente.nome}/`
         pedidos.map(response=>{
             if(response.obs ==''){
-                output = [...output, {desc: `${response.prato} -${precoTotal.format(response.preco)}`}]
+                saida = [...saida, {desc: `${response.prato} -${precoTotal.format(response.preco)}`}]
+                controle = [...controle, `${response.prato} /`]
             }else{
-                output = [...output, {desc: `${response.prato} (${response.obs}) -${precoTotal.format(response.preco)}`}]
+                saida = [...saida, {desc: `${response.prato} (${response.obs}) -${precoTotal.format(response.preco)}`}]
+                controle = `${controle}${response.prato} (${response.obs}) /`
             }
-            
         })
-        return output
+
+        controle = `${controle} cozinha`
+        console.log(saida)
+        if(config == 0){
+            return saida
+        }else{
+            return controle
+        }
+
     }
 
 //------------calcula o troco-------------
@@ -136,6 +169,7 @@ const Cliente = (state) => {
        document.location.reload()
     }
 
+
 /*-----------------------------------------html-----------------------------------------*/
     return(
         <div>
@@ -151,13 +185,6 @@ const Cliente = (state) => {
                         id={'nome'}
                         placeholder='Seu Nome' 
                         className={styles.nome,styles.entrada1} 
-                        onChange={()=>handleNome()}
-                    />
-                    <input 
-                        type={'text'} 
-                        id={'mesa'}
-                        placeholder={'nº da mesa'} 
-                        className={styles.mesa} 
                         onChange={()=>handleNome()}
                     />
                     <form className={styles.form} id={'form'} onSubmit={handleSubmit}>
@@ -187,12 +214,12 @@ const Cliente = (state) => {
                                             console.log("input")
                                         }}
                                     /> 
-                                    <div 
+                                    <button 
                                         className={styles.filtro}
                                         onClick={handleFiltro}
                                     >
-                                       <a> {filtro.type} </a>
-                                    </div>
+                                        {filtro.type} 
+                                    </button>
                                     
                                 </>
                             }
@@ -253,12 +280,12 @@ const Cliente = (state) => {
                         </h3>
                     </div>
                     <div className={styles.botoes}>
-                        <div className={styles.botao} onClick={()=>{reset()}}>
+                        <button className={styles.botao} onClick={()=>{reset()}}>
                             <h3>CANCELAR</h3>
-                        </div>
-                        <div className={styles.botao}>
+                        </button>
+                        <button className={styles.botao} onClick={handleClickSendMessage}>
                             <h3>FINALIZAR</h3>
-                        </div>
+                        </button>
                     </div>
                 </div>
             </div>

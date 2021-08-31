@@ -33,7 +33,9 @@ ol, ul {
 blockquote, q {
     quotes: none;
 }
-
+button{
+    background-color: #ffffff00;
+}
 input[type=text]{
     outline: none;
     border-radius: 50px;

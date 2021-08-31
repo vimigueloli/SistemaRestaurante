@@ -1,7 +1,10 @@
-import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef, useImperativeHandle } from 'react';
 import styles from './css.module.css'
 import { Pedido } from '../../components/pedido';
 import useWebSocket, { ReadyState } from 'react-use-websocket';
+import { w3cwebsocket as W3CWebSocket } from "websocket";
+
+
 
 
 
@@ -10,42 +13,54 @@ import useWebSocket, { ReadyState } from 'react-use-websocket';
 
 export function Cozinha(){
     const [pedido,setPedido] = useState([])
-    // output somente exemplo de saida planejar trafego
-    const [output,setOutput] = useState(true)
+//
+    const client = new W3CWebSocket('ws://localhost:3001');
 
-//----------------estabelecedo uma conexão com o web socket----------------
-    const ws = new WebSocket('ws://localhost:3001');
-    const { lastMessage, readyState } = useWebSocket('ws://localhost:3001', {
-        onOpen: () => console.log(`Connected to App WS`),
-        onMessage: () => {
-            handleNewMessage()
+
+
+//----------------recebendo pedidos------------------
+    client.onmessage = (mensagem) =>{
+        if(mensagem.data != pedido){
+            handleSetPedido(mensagem.data)
         }
-    })
-
-//-------------------------recebe do ws----------------------------
-    function handleNewMessage(){
-        ws.onmessage = function(msg) {
-            console.log(msg.data);
-            setPedido(msg.data)
-        };
-        
+    }
+    function handleSetPedido(input){
+        setPedido([...pedido,input])
     }
 
-//-------------------------envia para o ws----------------------------
-    const handleClickSendMessage = useCallback(() => ws.send(output), []);
 
+//-------------entrega o prato que ja foi cozinhado----------------
+    const handleEntrega = event =>{
+        var output = pedido
+        for(let i=0;i < pedido.length ; i++){
+            if(event.target.id == pedido[i]){
+                output.splice(i,1)
+                var decode = `${event.target.id}`
+                decode = decode.replace(/,/gi,'')
+                document.getElementById(decode).style.display ='none';
+                
+                setPedido(output)
+            }
+        }
+    }
     
+
+
+    console.log(pedido)
 /*-----------------------------------------html-----------------------------------------*/
     return(
         <div>
-            <div onClick={handleClickSendMessage} className={styles.header}>
+            <div className={styles.header}>
                 <h1 className={styles.title}>Pedidos</h1>
                 <div className={styles.divisor}/>
             </div>
             <div className ={styles.container}>
                 <div className={styles.pedidos}>
                     <div className={styles.space} />
-                        <Pedido  mensagem={pedido}/>
+                        {
+                            pedido.map(response => <Pedido onClick={handleEntrega}  mensagem={response} key={response}/>)
+                        }
+                        
                     <div className={styles.space} />
                 </div>
                 <div className={styles.footer} />

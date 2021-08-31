@@ -112,12 +112,10 @@ function reducer(state = initial_state,action){
 //---------coloca um pedido "no carrinho"----------
     if(action.type == "CLIENTE"){
         var nome = action.nome
-        var mesa = action.mesa
         return{
             ...state,
             cliente:{
-                nome:nome,
-                mesa: mesa,
+                nome: nome,
             } 
         }
     }
