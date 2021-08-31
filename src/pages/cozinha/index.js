@@ -3,6 +3,7 @@ import styles from './css.module.css'
 import { Pedido } from '../../components/pedido';
 import useWebSocket, { ReadyState } from 'react-use-websocket';
 import { w3cwebsocket as W3CWebSocket } from "websocket";
+import cliente from '../cliente';
 
 
 
@@ -14,9 +15,10 @@ import { w3cwebsocket as W3CWebSocket } from "websocket";
 export function Cozinha(){
     const [pedido,setPedido] = useState([])
 //
+    const ws = new WebSocket('ws://localhost:3001')
     const client = new W3CWebSocket('ws://localhost:3001');
-
-
+    
+    
 
 //----------------recebendo pedidos------------------
     client.onmessage = (mensagem) =>{
@@ -25,12 +27,17 @@ export function Cozinha(){
         }
     }
     function handleSetPedido(input){
-        setPedido([...pedido,input])
+        var decode = input.replace(/,/gi,'')
+        var dados = decode.split('/')
+        var estado = dados[dados.length -1] 
+        if(estado == ' cozinha'){
+            setPedido([...pedido,input])
+        }
     }
 
 
 //-------------entrega o prato que ja foi cozinhado----------------
-    const handleEntrega = event =>{
+    const handleEntrega = useCallback( event =>{
         var output = pedido
         for(let i=0;i < pedido.length ; i++){
             if(event.target.id == pedido[i]){
@@ -38,15 +45,14 @@ export function Cozinha(){
                 var decode = `${event.target.id}`
                 decode = decode.replace(/,/gi,'')
                 document.getElementById(decode).style.display ='none';
-                
+                decode = decode.replace(' cozinha',' pedido' )
+                ws.send(decode)
                 setPedido(output)
             }
         }
-    }
+    },[pedido])
     
 
-
-    console.log(pedido)
 /*-----------------------------------------html-----------------------------------------*/
     return(
         <div>

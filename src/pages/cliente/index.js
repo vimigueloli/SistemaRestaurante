@@ -29,10 +29,15 @@ const Cliente = (state) => {
     const handleClickSendMessage = useCallback(() => {
         if(cliente.nome !== undefined){
             if(cliente.nome !== ''){
-                output = geraResumo(1)
-                ws.send(output)
-                window.alert('Pedido realizado com sucesso')
-                reset()
+                var comparativo = precoTotal.format(0)
+                if(total == comparativo){
+                    window.alert("você não selecionou nenhum produto")
+                }else{
+                    output = geraResumo(1)
+                    ws.send(output)
+                    window.alert('Pedido realizado com sucesso')
+                    reset()
+                }
             }else{
                 window.alert("por favor insira o seu nome")
             }
