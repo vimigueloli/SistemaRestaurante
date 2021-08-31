@@ -1,5 +1,4 @@
-import {createStore} from 'redux'
-
+import { createStore } from 'redux'
 
 /*-----------------------------------cardapio--------------------------------------*/
 const cardapio = [

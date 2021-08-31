@@ -1,9 +1,39 @@
-# Getting Started with Create React App
+# Sistema Restaurante
+
+![GitHub](https://img.shields.io/github/license/vimigueloli/DeezerList?color=brigthgreen&) <br/>
+
+#### Esse Projeo Foi um desafio de um processo seletivo para desenvolvedor Front-end. O objetivo era testar as minhas habilidades e conhecer meus metodos de programação.
+
+# dependências
+
+![GitHub](https://img.shields.io/badge/dependências-react-4e8dec?style=plastic)
+![GitHub](https://img.shields.io/badge/react_redux-4e8dec?style=plastic)
+![GitHub](https://img.shields.io/badge/-redux-4e8dec?style=plastic)
+![GitHub](https://img.shields.io/badge/-react_router_dom-4e8dec?style=plastic)
+![GitHub](https://img.shields.io/badge/-socket.io_client-4e8dec?style=plastic)
+![GitHub](https://img.shields.io/badge/-uuid-4e8dec?style=plastic)
+
+<br/>
+
+#### O projedo depende de algumas bibliotecas e frameworks, então para o funcionamento dele é necessário instalar essas dependências com os seguintes comandos no shell do Windows:
+
+```
+npm install react
+npm install redux
+npm install react-redux
+npm install react-router-dom
+yarn add socket.io-client uuid
+```
+
+#### Após as essas instalações você pode testar a build dessa web application com o comando "yarn start"
+
+# Observações
 
 
 
 
-react redux react-redux axios
+
+react redux react-redux axios react-router-dom
 
 
 
