@@ -4,51 +4,121 @@ import { createStore } from 'redux'
 const cardapio = [
     {
         id: 1,
-        nome: "Hamburguer",
-        preco: 16.25,
-        ingredientes: "pão, carne, queijo, alface e tomate",
+        nome: "XBurguer",
+        preco: 12.5,
+        ingredientes: "Sanduiche de pão, carne, queijo, alface e tomate",
         state: false,
-        url: '../../assets/hamburguer.png',
         obs: " ",
         ordem: 0
     },
     {
         id: 2,
-        nome: "Refri 500ml",
-        preco: 10.5,
-        ingredientes: "Copo de refrigerante de 500 ml com sabor a escolha",
+        nome: "XBacon",
+        preco: 16.5,
+        ingredientes: "Sanduiche de pão, carne, bacon, queijo, alface e tomate",
         state: false,
         obs: " ",
         ordem: 1
     },
     {
         id: 3,
-        nome: "Batata frita grande",
-        preco: 8.5,
-        ingredientes: "350g de batata frita",
+        nome: "XChedder",
+        preco: 16.5,
+        ingredientes: "Sanduiche de pão, carne, queijo chedder,alface e tomate",
         state: false,
         obs: " ",
         ordem: 2
     },
-
     {
         id: 4,
-        nome: "XBacon",
+        nome: "XEgg",
         preco: 16.5,
-        ingredientes: "Sanduiche de pão,carne,bacon,queijo,salada e tomate",
+        ingredientes: "Sanduiche de pão, carne, queijo, ovo, alface e tomate",
         state: false,
         obs: " ",
         ordem: 3
     },
     {
         id: 5,
-        nome: "Combo simples",
-        preco: 22.5,
-        ingredientes: "Hamburguer, batata frita grande e refrigerante de 500ml com sabor a escolha",
+        nome: "Refri 500ml",
+        preco: 8.5,
+        ingredientes: "Copo de refrigerante de 500 ml com sabor a escolha",
         state: false,
         obs: " ",
         ordem: 4
-    }
+    },
+    {
+        id: 6,
+        nome: "Refri 350ml",
+        preco: 7.5,
+        ingredientes: "Copo de refrigerante de 350 ml com sabor a escolha",
+        state: false,
+        obs: " ",
+        ordem: 5
+    },
+    {
+        id: 7,
+        nome: "Refri 200ml",
+        preco: 6.5,
+        ingredientes: "Copo de refrigerante de 200 ml com sabor a escolha",
+        state: false,
+        obs: " ",
+        ordem: 6
+    },
+    {
+        id: 8,
+        nome: "Batata frita grande",
+        preco: 5.5,
+        ingredientes: "350g de batata frita",
+        state: false,
+        obs: " ",
+        ordem: 7
+    },
+    {
+        id: 9,
+        nome: "Batata frita media",
+        preco: 4.5,
+        ingredientes: "250g de batata frita",
+        state: false,
+        obs: " ",
+        ordem: 8
+    },
+    {
+        id: 10,
+        nome: "Batata frita pequena",
+        preco: 3.5,
+        ingredientes: "150g de batata frita",
+        state: false,
+        obs: " ",
+        ordem: 9
+    },
+    {
+        id: 11,
+        nome: "Combo simples",
+        preco: 22.5,
+        ingredientes: "XBurguer, batata frita grande e refrigerante de 500ml com sabor a escolha",
+        state: false,
+        obs: " ",
+        ordem: 10
+    },
+    {
+        id: 12,
+        nome: "Combo Bacon",
+        preco: 25.5,
+        ingredientes: "XBacon, batata frita grande com bacon e refrigerante de 500ml com sabor a escolha",
+        state: false,
+        obs: " ",
+        ordem: 11
+    },
+    {
+        id: 13,
+        nome: "Combo chedder",
+        preco: 25.5,
+        ingredientes: "XChedder, batata frita grande com chedder e refrigerante de 500ml com sabor a escolha",
+        state: false,
+        obs: " ",
+        ordem: 12
+    },
 ]
 
 /*-----------estado inicial da store------------*/

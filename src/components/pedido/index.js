@@ -1,4 +1,4 @@
-import React, { useCallback} from 'react'
+import React from 'react'
 import styles from './css.module.css'
 
 export function Pedido(props){

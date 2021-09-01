@@ -1,31 +1,23 @@
-import React, { useState, useEffect, useCallback, useMemo, useRef, useImperativeHandle } from 'react';
+import React, { useState, useCallback} from 'react';
 import styles from './css.module.css'
 import { Pedido } from '../../components/pedido';
-import useWebSocket, { ReadyState } from 'react-use-websocket';
 import { w3cwebsocket as W3CWebSocket } from "websocket";
-import cliente from '../cliente';
-
-
-
-
-
 
 
 
 export function Cozinha(){
     const [pedido,setPedido] = useState([])
-//
     const ws = new WebSocket('ws://localhost:3001')
     const client = new W3CWebSocket('ws://localhost:3001');
-    
-    
 
-//----------------recebendo pedidos------------------
+//----------------recebendo sinais do websocket------------------
     client.onmessage = (mensagem) =>{
         if(mensagem.data != pedido){
             handleSetPedido(mensagem.data)
         }
     }
+
+//----------------verificando se é um pedido que vai para cozinha e mostra ele------------------
     function handleSetPedido(input){
         var decode = input.replace(/,/gi,'')
         var dados = decode.split('/')
@@ -34,7 +26,6 @@ export function Cozinha(){
             setPedido([...pedido,input])
         }
     }
-
 
 //-------------entrega o prato que ja foi cozinhado----------------
     const handleEntrega = useCallback( event =>{

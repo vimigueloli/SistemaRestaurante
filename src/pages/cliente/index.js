@@ -1,8 +1,7 @@
-import React, {useState, useCallback, useEffect} from 'react'
+import React, {useState, useCallback} from 'react'
 import styles from './css.module.css'
 import { Produto } from '../../components/produto'
 import {connect, useDispatch} from 'react-redux'
-import useWebSocket, { ReadyState } from 'react-use-websocket';
 
 
 
@@ -19,8 +18,6 @@ const Cliente = (state) => {
     const [searchOn,setSearchOn] = useState(false)
     const [filtro,setFilfro] = useState({type:'NOME', state: true})
     
-    
-
 
 //----------------estabelecedo uma conexão com o web socket----------------
     var ws = new WebSocket('ws://localhost:3001')
@@ -47,13 +44,13 @@ const Cliente = (state) => {
         
     }, [output,]);
     
-//-------regista o nome da pessoa e da mesa---------
+//-------regista o nome da pessoa---------
     function handleNome(){
         var nome = document.getElementById('nome').value
         dispatch(regCliente(nome))
     }
 
-//-------envia o nome da pessoa e da mesa para store---------
+//-------envia o nome da pessoa para store---------
     function regCliente(nome){
         return{
             type: "CLIENTE",

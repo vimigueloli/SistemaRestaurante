@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useCallback, useMemo, useRef, useImperativeHandle } from 'react';
+import React, { useState} from 'react';
 import styles from './css.module.css'
 import { Entregas } from '../../components/entregas';
-import useWebSocket, { ReadyState } from 'react-use-websocket';
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 
 
@@ -20,6 +19,8 @@ export function Pedidos(){
             handleSetPedido(mensagem.data)
         }
     }
+
+//---------verificando se são pedidos entregues e mostrando eles----------
     function handleSetPedido(input){
         var decode = input.replace(/,/gi,'')
         var dados = decode.split('/')
