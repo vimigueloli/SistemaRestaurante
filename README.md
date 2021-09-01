@@ -4,9 +4,11 @@
 
 #### Esse Projeo Foi um desafio de um processo seletivo para desenvolvedor Front-end. O objetivo era desenvolver um sistema real time de um restaurante no modelo de fast food, no qual o cliente faz seu pedido em uma tela, a cozinha recebe os pedidos em outra tela e envia os pedidos concluidos para outra tela possibilitando os clientes verem os pedidos prontos. 
 
+#### O projeto teve suas 3 telas desenvolvidas com o React integrado com o Redux e para interação entre as telas foi usado um servidor node.js adaptado para comunicações websocket. 
+
 #### você pode conferir as interfaces nos links: <br/>https://sistema-restaurante.vercel.app/ <br/>https://sistema-restaurante.vercel.app/cozinha <br/>https://sistema-restaurante.vercel.app/pedidos
 
-###### Lembrando que as interfaces acima não vão funcionar completamente pela falta do Back-End
+###### Lembrando que as interfaces acima não vão funcionar completamente pois o servidor Back-End não foi hospedado publicamente.
 
 # dependências Front-End
 
