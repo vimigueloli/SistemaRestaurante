@@ -10,9 +10,9 @@
 
 ###### Lembrando que as interfaces acima não vão funcionar completamente pois o servidor Back-End não foi hospedado publicamente.
 
-# dependências Front-End
+# Dependências Front-End
 
-![GitHub](https://img.shields.io/badge/dependências-react-4e8dec?style=plastic)
+![GitHub](https://img.shields.io/badge/Dependências-react-4e8dec?style=plastic)
 ![GitHub](https://img.shields.io/badge/-react_redux-4e8dec?style=plastic)
 ![GitHub](https://img.shields.io/badge/-redux-4e8dec?style=plastic)
 ![GitHub](https://img.shields.io/badge/-react_router_dom-4e8dec?style=plastic)
@@ -30,9 +30,9 @@ npm install react-router-dom
 npm install websocket
 ```
 
-# dependências Back-End
+# Dependências Back-End
 
-![GitHub](https://img.shields.io/badge/dependências-node-689f63?style=plastic)
+![GitHub](https://img.shields.io/badge/Dependências-node-689f63?style=plastic)
 ![GitHub](https://img.shields.io/badge/-cors-689f63?style=plastic)
 ![GitHub](https://img.shields.io/badge/-dotenv-689f63?style=plastic)
 ![GitHub](https://img.shields.io/badge/-express-689f63?style=plastic)
