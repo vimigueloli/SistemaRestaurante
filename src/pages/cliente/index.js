@@ -176,7 +176,7 @@ const Cliente = (state) => {
     return(
         <div>
             <div onClick={()=> console.log(pedidos)} className={styles.header}>
-                <h1 className={styles.title}>FAÇA SEU PEDIDO</h1>
+                <h1 className={styles.title}>FAÇA SEU PEDIDO!</h1>
                 <div className={styles.divisor}/>
             </div>
             <div className ={styles.container}>
