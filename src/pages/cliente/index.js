@@ -92,7 +92,7 @@ const Cliente = (state) => {
         for(let i =0;i < lista.length; i++){
             console.log(lista[i])
             let text
-            if(filtro.state == true){
+            if(filtro.state == false){
                 text = lista[i].nome
             }else{
                 text = `${lista[i].id}`
